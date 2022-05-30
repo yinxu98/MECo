@@ -1,0 +1,141 @@
+model = dict(
+    type='MultiEmbedding',
+    backbone=dict(
+        type='MyResNetV1d',
+        depth=50,
+        num_stages=4,
+        out_indices=(0, 1, 2, 3),
+        frozen_stages=1,
+        norm_cfg=dict(type='BN', requires_grad=True),
+        norm_eval=True,
+        style='pytorch'),
+    n_backbone=2,
+    predictor=dict(dim_in=2048, dim_mid=1024, dim_out=2048),
+    n_predictor=2)
+optimizer = dict(type='SGD', lr=0.02, momentum=0.9, weight_decay=0.0001)
+runner = dict(epoch=100, save_interval=20)
+data = dict(
+    type='OpenSARShip',
+    root='../data/opensarship',
+    n_class=3,
+    percentage=70,
+    image_size=64,
+    normalize=dict(
+        mean=[0.02157633, 0.02157633, 0.02157633],
+        std=[0.03637275, 0.03637275, 0.03637275]),
+    homography=dict(
+        file='./datasets/homography.h5',
+        mean=[
+            1.0690454325631715, 0.015830956719825373, -1.455018376998559,
+            0.01567629779545185, 1.0692125828079984, -1.446146309283768,
+            0.0004288037121747996, 0.00043649732070039576
+        ],
+        std=[
+            0.40372048543771416, 0.19760619287460907, 10.208194354100314,
+            0.19791173401645037, 0.40289598309784064, 10.178581044080417,
+            0.004083203344468378, 0.004076959048045553
+        ]),
+    workers=2,
+    batch_size=dict(pretrain=1024, train=512, val=2048))
+work_dir = '../work_dirs/multiembedding_opensarship_pretrain'
+log_file = '../work_dirs/multiembedding_opensarship_pretrain/20220122_230915.log'
+Pretrain: [  1/100] eta 00:14:51 loss_sim -0.0823
+Pretrain: [  2/100] eta 00:03:16 loss_sim -0.5334
+Pretrain: [  3/100] eta 00:03:14 loss_sim -1.0666
+Pretrain: [  4/100] eta 00:03:12 loss_sim -1.3671
+Pretrain: [  5/100] eta 00:03:10 loss_sim -1.5142
+Pretrain: [  6/100] eta 00:03:08 loss_sim -1.6107
+Pretrain: [  7/100] eta 00:04:39 loss_sim -1.6803
+Pretrain: [  8/100] eta 00:04:36 loss_sim -1.7291
+Pretrain: [  9/100] eta 00:04:33 loss_sim -1.7629
+Pretrain: [ 10/100] eta 00:03:00 loss_sim -1.7880
+Pretrain: [ 11/100] eta 00:02:58 loss_sim -1.8083
+Pretrain: [ 12/100] eta 00:02:56 loss_sim -1.8253
+Pretrain: [ 13/100] eta 00:04:21 loss_sim -1.8387
+Pretrain: [ 14/100] eta 00:02:52 loss_sim -1.8499
+Pretrain: [ 15/100] eta 00:02:50 loss_sim -1.8589
+Pretrain: [ 16/100] eta 00:04:12 loss_sim -1.8664
+Pretrain: [ 17/100] eta 00:04:09 loss_sim -1.8730
+Pretrain: [ 18/100] eta 00:04:06 loss_sim -1.8788
+Pretrain: [ 19/100] eta 00:04:03 loss_sim -1.8842
+Pretrain: [ 20/100] eta 00:04:00 loss_sim -1.8894
+Pretrain: [ 21/100] eta 00:03:57 loss_sim -1.8947
+Pretrain: [ 22/100] eta 00:03:54 loss_sim -1.8990
+Pretrain: [ 23/100] eta 00:02:34 loss_sim -1.9037
+Pretrain: [ 24/100] eta 00:03:48 loss_sim -1.9083
+Pretrain: [ 25/100] eta 00:02:30 loss_sim -1.9124
+Pretrain: [ 26/100] eta 00:03:42 loss_sim -1.9161
+Pretrain: [ 27/100] eta 00:02:26 loss_sim -1.9200
+Pretrain: [ 28/100] eta 00:03:36 loss_sim -1.9229
+Pretrain: [ 29/100] eta 00:03:33 loss_sim -1.9257
+Pretrain: [ 30/100] eta 00:03:30 loss_sim -1.9283
+Pretrain: [ 31/100] eta 00:03:27 loss_sim -1.9304
+Pretrain: [ 32/100] eta 00:03:24 loss_sim -1.9320
+Pretrain: [ 33/100] eta 00:03:21 loss_sim -1.9347
+Pretrain: [ 34/100] eta 00:02:12 loss_sim -1.9360
+Pretrain: [ 35/100] eta 00:03:15 loss_sim -1.9374
+Pretrain: [ 36/100] eta 00:02:08 loss_sim -1.9388
+Pretrain: [ 37/100] eta 00:03:09 loss_sim -1.9397
+Pretrain: [ 38/100] eta 00:03:06 loss_sim -1.9415
+Pretrain: [ 39/100] eta 00:03:03 loss_sim -1.9421
+Pretrain: [ 40/100] eta 00:02:00 loss_sim -1.9426
+Pretrain: [ 41/100] eta 00:01:58 loss_sim -1.9430
+Pretrain: [ 42/100] eta 00:02:54 loss_sim -1.9435
+Pretrain: [ 43/100] eta 00:02:51 loss_sim -1.9442
+Pretrain: [ 44/100] eta 00:02:48 loss_sim -1.9428
+Pretrain: [ 45/100] eta 00:02:45 loss_sim -1.9428
+Pretrain: [ 46/100] eta 00:02:42 loss_sim -1.9430
+Pretrain: [ 47/100] eta 00:02:39 loss_sim -1.9429
+Pretrain: [ 48/100] eta 00:02:36 loss_sim -1.9432
+Pretrain: [ 49/100] eta 00:02:33 loss_sim -1.9428
+Pretrain: [ 50/100] eta 00:02:30 loss_sim -1.9425
+Pretrain: [ 51/100] eta 00:01:38 loss_sim -1.9423
+Pretrain: [ 52/100] eta 00:02:24 loss_sim -1.9416
+Pretrain: [ 53/100] eta 00:01:34 loss_sim -1.9414
+Pretrain: [ 54/100] eta 00:02:18 loss_sim -1.9409
+Pretrain: [ 55/100] eta 00:02:15 loss_sim -1.9401
+Pretrain: [ 56/100] eta 00:02:12 loss_sim -1.9390
+Pretrain: [ 57/100] eta 00:02:09 loss_sim -1.9389
+Pretrain: [ 58/100] eta 00:01:24 loss_sim -1.9374
+Pretrain: [ 59/100] eta 00:01:22 loss_sim -1.9367
+Pretrain: [ 60/100] eta 00:02:00 loss_sim -1.9357
+Pretrain: [ 61/100] eta 00:01:18 loss_sim -1.9351
+Pretrain: [ 62/100] eta 00:01:54 loss_sim -1.9343
+Pretrain: [ 63/100] eta 00:01:51 loss_sim -1.9337
+Pretrain: [ 64/100] eta 00:01:12 loss_sim -1.9325
+Pretrain: [ 65/100] eta 00:01:45 loss_sim -1.9316
+Pretrain: [ 66/100] eta 00:01:42 loss_sim -1.9309
+Pretrain: [ 67/100] eta 00:01:39 loss_sim -1.9306
+Pretrain: [ 68/100] eta 00:01:04 loss_sim -1.9305
+Pretrain: [ 69/100] eta 00:01:33 loss_sim -1.9305
+Pretrain: [ 70/100] eta 00:01:30 loss_sim -1.9310
+Pretrain: [ 71/100] eta 00:01:27 loss_sim -1.9308
+Pretrain: [ 72/100] eta 00:01:24 loss_sim -1.9300
+Pretrain: [ 73/100] eta 00:01:21 loss_sim -1.9298
+Pretrain: [ 74/100] eta 00:01:18 loss_sim -1.9291
+Pretrain: [ 75/100] eta 00:01:15 loss_sim -1.9290
+Pretrain: [ 76/100] eta 00:01:12 loss_sim -1.9292
+Pretrain: [ 77/100] eta 00:00:46 loss_sim -1.9286
+Pretrain: [ 78/100] eta 00:01:06 loss_sim -1.9285
+Pretrain: [ 79/100] eta 00:01:03 loss_sim -1.9281
+Pretrain: [ 80/100] eta 00:01:00 loss_sim -1.9281
+Pretrain: [ 81/100] eta 00:00:57 loss_sim -1.9285
+Pretrain: [ 82/100] eta 00:00:54 loss_sim -1.9279
+Pretrain: [ 83/100] eta 00:00:51 loss_sim -1.9279
+Pretrain: [ 84/100] eta 00:00:48 loss_sim -1.9278
+Pretrain: [ 85/100] eta 00:00:30 loss_sim -1.9271
+Pretrain: [ 86/100] eta 00:00:42 loss_sim -1.9277
+Pretrain: [ 87/100] eta 00:00:39 loss_sim -1.9274
+Pretrain: [ 88/100] eta 00:00:36 loss_sim -1.9272
+Pretrain: [ 89/100] eta 00:00:22 loss_sim -1.9276
+Pretrain: [ 90/100] eta 00:00:30 loss_sim -1.9275
+Pretrain: [ 91/100] eta 00:00:27 loss_sim -1.9273
+Pretrain: [ 92/100] eta 00:00:24 loss_sim -1.9272
+Pretrain: [ 93/100] eta 00:00:21 loss_sim -1.9270
+Pretrain: [ 94/100] eta 00:00:18 loss_sim -1.9272
+Pretrain: [ 95/100] eta 00:00:10 loss_sim -1.9272
+Pretrain: [ 96/100] eta 00:00:12 loss_sim -1.9271
+Pretrain: [ 97/100] eta 00:00:09 loss_sim -1.9261
+Pretrain: [ 98/100] eta 00:00:04 loss_sim -1.9267
+Pretrain: [ 99/100] eta 00:00:02 loss_sim -1.9273
+Pretrain: [100/100] eta 00:00:00 loss_sim -1.9267
